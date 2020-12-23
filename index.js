@@ -9,7 +9,10 @@ function postSign() {
         email: document.getElementById('email').value,
         password: document.getElementById('password').value
     };
-
+    document.getElementById('name').value = "";
+    document.getElementById('fname').value = "";
+    document.getElementById('email').value = "";
+    document.getElementById('password').value = "";
     const Http = new XMLHttpRequest();
     const url = 'http://localhost:5000/signup';
     Http.open("POST", url);
@@ -37,7 +40,8 @@ function login() {
         email: Emails,
         password: Passwords
     }));
-
+    document.getElementById('lemail').value = ""
+    document.getElementById('lpassword').value = ""
     Http.onreadystatechange = (e) => {
         document.getElementById("email").innerText = Http.responseText;
     }
