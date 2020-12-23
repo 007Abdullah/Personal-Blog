@@ -1,4 +1,7 @@
 
+
+
+
 function postSign() {
     var user = {
         name: document.getElementById('name').value,
@@ -8,7 +11,7 @@ function postSign() {
     };
 
     const Http = new XMLHttpRequest();
-    const url = 'http://localhost:3000/signup';
+    const url = 'http://localhost:5000/signup';
     Http.open("POST", url);
     Http.setRequestHeader("Content-Type", "application/json");
     Http.send(JSON.stringify(user));
@@ -26,7 +29,7 @@ function login() {
     let Passwords = document.getElementById("lpassword").value;
 
     const Http = new XMLHttpRequest();
-    const url = 'http://localhost:3000/login';
+    const url = 'http://localhost:5000/login';
     Http.open("POST", url);
     Http.setRequestHeader("Content-Type", "application/json");
 
@@ -42,3 +45,4 @@ function login() {
 
     return false;
 }
+

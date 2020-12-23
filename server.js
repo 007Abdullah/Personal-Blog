@@ -10,12 +10,12 @@ let users = [
 ];
 
 
-
+var PORT = process.env.PORT || 5000;
 var express = require("express");
 var cors = require('cors');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
-var PORT = process.env.PORT || 5000;
+let fs = require('fs');
 
 
 var app = express();
@@ -44,6 +44,29 @@ app.use(bodyParser.json())
 // app.get('/signup', (req, res) => {
 //     res.render('signup');
 // })
+
+
+
+// app.get('/', function (req, res) {
+//     res.render('index.html');
+// });
+
+
+app.get('/', (request, response, next) => {
+    response.writeHead(200, {
+        'Content-Type': 'text/html'
+    });
+    fs.readFile('./index.html', null, function (error, data) {
+        if (error) {
+            response.writeHead(404);
+            respone.write('Whoops! File not found!');
+        } else {
+            response.write(data);
+        }
+        response.end();
+    });
+
+});
 
 app.post('/signup', (req, res) => {
     let isFound = false;
