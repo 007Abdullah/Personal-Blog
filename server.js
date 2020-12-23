@@ -52,22 +52,25 @@ app.use(bodyParser.json())
 // });
 
 
-app.get('/', (request, response, next) => {
-    response.writeHead(200, {
-        'Content-Type': 'text/html'
-    });
-    fs.readFile('./index.html', null, function (error, data) {
-        if (error) {
-            response.writeHead(404);
-            respone.write('Whoops! File not found!');
-        } else {
-            response.write(data);
-        }
-        response.end();
-    });
+// app.get('/', (request, response, next) => {
+//     response.writeHead(200, {
+//         'Content-Type': 'text/html'
+//     });
+//     fs.readFile('./index.html', null, function (error, data) {
+//         if (error) {
+//             response.writeHead(404);
+//             respone.write('Whoops! File not found!');
+//         } else {
+//             response.write(data);
+//         }
+//         response.end();
+//     });
 
+// });
+app.get("/", (req, res, next) => {
+    console.log("some one get menu");
+    res.send("signup success full");
 });
-
 app.post('/signup', (req, res) => {
     let isFound = false;
     let getdata = users;
