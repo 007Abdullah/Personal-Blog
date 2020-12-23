@@ -15,7 +15,7 @@ var express = require("express");
 var cors = require('cors');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
-
+var PORT = process.env.PORT || 5000;
 
 
 var app = express();
@@ -107,6 +107,6 @@ app.post('/login', (req, res) => {
 //     res.sendStatus(200);
 // });
 
-app.listen(3000, () => {
-    console.log("server is running on 3000");
+app.listen(PORT, () => {
+    console.log("server is running on " + PORT);
 })
