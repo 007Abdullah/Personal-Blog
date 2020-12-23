@@ -2,8 +2,9 @@
   "name": "login",
   "version": "6.14.8",
   "description": "login page with server",
-  "main": "app.js",
+  "main": "server.js",
   "dependencies": {
+    "body-parse": "^0.1.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
@@ -13,7 +14,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cls && node app.js"
+    "start": "cls && node server.js"
   },
   "repository": {
     "type": "git",
