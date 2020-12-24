@@ -14,7 +14,7 @@ function postSign() {
     document.getElementById('email').value = "";
     document.getElementById('password').value = "";
     const Http = new XMLHttpRequest();
-    const url = 'http://localhost:5000/signup';
+    const url = 'https://logins-server.herokuapp.com/signup';
     Http.open("POST", url);
     Http.setRequestHeader("Content-Type", "application/json");
     Http.send(JSON.stringify(user));
@@ -32,7 +32,7 @@ function login() {
     let Passwords = document.getElementById("lpassword").value;
 
     const Http = new XMLHttpRequest();
-    const url = 'http://localhost:5000/login';
+    const url = 'https://logins-server.herokuapp.com/login';
     Http.open("POST", url);
     Http.setRequestHeader("Content-Type", "application/json");
 
