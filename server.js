@@ -1,10 +1,10 @@
 
 let users = [
     {
-        name: "demo1",
-        fathername: "Fatherdom2",
-        email: "demo1@gmail.com",
-        password: 123
+        name: "Sameer",
+        fathername: "Ali",
+        email: "sameer@gmail.com",
+        password: "123"
     },
 
 ];
@@ -113,12 +113,17 @@ app.post('/login', (req, res) => {
             break;
         }
     }
-
     if (isFound === false) {
         res.send("User Not Found");
     }
     else {
-        res.send("Login Succesfuly :" + e);
+        res.send({
+            name: users[isFound].name,
+            fname: users[isFound].fathername,
+            email: users[isFound].email,
+
+            "message": "Login Succes"
+        });
 
     }
 

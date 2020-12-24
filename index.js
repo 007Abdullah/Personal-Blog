@@ -1,5 +1,7 @@
 
 
+const url = 'https://login-servers.herokuapp.com';
+// const url = 'http://localhost:5000';
 
 
 function postSign() {
@@ -14,8 +16,8 @@ function postSign() {
     document.getElementById('email').value = "";
     document.getElementById('password').value = "";
     const Http = new XMLHttpRequest();
-    const url = 'https://logins-server.herokuapp.com/signup';
-    Http.open("POST", url);
+
+    Http.open("POST", url + "/signup");
     Http.setRequestHeader("Content-Type", "application/json");
     Http.send(JSON.stringify(user));
     Http.onreadystatechange = (e) => {
@@ -32,8 +34,8 @@ function login() {
     let Passwords = document.getElementById("lpassword").value;
 
     const Http = new XMLHttpRequest();
-    const url = 'https://logins-server.herokuapp.com/login';
-    Http.open("POST", url);
+
+    Http.open("POST", url + "/login");
     Http.setRequestHeader("Content-Type", "application/json");
 
     Http.send(JSON.stringify({
@@ -43,7 +45,16 @@ function login() {
     document.getElementById('lemail').value = ""
     document.getElementById('lpassword').value = ""
     Http.onreadystatechange = (e) => {
-        document.getElementById("email").innerText = Http.responseText;
+
+        let JSONres = JSON.parse(Http.responseText)
+
+        document.getElementById("Result").innerText = JSONres.message;
+        document.getElementById("name").innerText = "Name :" + JSONres.name;
+        document.getElementById("fname").innerText = "Father Name :" + JSONres.fname;
+        document.getElementById("email").innerText = "Email :" + JSONres.email;
+
+
+
     }
 
 
