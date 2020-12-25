@@ -73,13 +73,6 @@ app.get("/", (req, res, next) => {
 });
 app.post('/signup', (req, res) => {
     let isFound = false;
-    let getdata = users;
-    if (getdata) {
-        users = getdata;
-    }
-    else {
-        users = [];
-    }
     for (i = 0; i < users.length; i++) {
         if (users[i].email === req.body.email) {
             isFound = true;
@@ -87,13 +80,20 @@ app.post('/signup', (req, res) => {
         }
     }
     if (isFound) {
-        res.send("already exit");
-
+        res.send({
+            message: "User Already Exist With This Email",
+            status: 459
+        });
     }
     else {
         users.push(req.body);
         console.log(req.body);
-        res.send("Sign Up Succesfuly");
+
+        res.send({
+            message: "Sign Up Successfully",
+            status: 200
+        });
+
     }
 
 
@@ -104,25 +104,35 @@ app.post('/signup', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-    let e = req.body.email;
-    let p = req.body.password;
+
+
     let isFound = false;
     for (let i = 0; i < users.length; i++) {
-        if (e === users[i].email && p === users[i].password) {
+        if (req.body.email === users[i].email) {
             isFound = i;
             break;
         }
     }
-    if (isFound === false) {
-        res.send("User Not Found");
+    if (isFound) {
+        if (users[isFound].password === req.body.password) {
+            res.send({
+                user: users[isFound],
+                message: "Login Succes",
+                status: 200
+            });
+        }
+        else {
+            res.send({
+                message: "incorrect passsword",
+                status: 400
+            });
+        }
     }
     else {
         res.send({
-            name: users[isFound].name,
-            fname: users[isFound].fathername,
-            email: users[isFound].email,
+            message: "User Not Found",
+            status: 400
 
-            "message": "Login Succes"
         });
 
     }
