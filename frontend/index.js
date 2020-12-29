@@ -1,40 +1,9 @@
 
 
-const url = 'https://login-servers.herokuapp.com';
-// const url = 'http://localhost:5000';
+// const url = 'https://login-servers.herokuapp.com';
+const url = 'http://localhost:5000';
 
 
-function postSign() {
-    var user = {
-        name: document.getElementById('name').value,
-        fathername: document.getElementById('fname').value,
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value
-    };
-
-    const Http = new XMLHttpRequest();
-
-    Http.open("POST", url + "/signup");
-    Http.setRequestHeader("Content-Type", "application/json");
-    Http.send(JSON.stringify(user));
-    Http.onreadystatechange = (e) => {
-        if (Http.readyState === 4) {
-            let JsonResp = JSON.parse(Http.responseText);
-            if (JsonResp.status === 200) {
-                document.getElementById('name').value = "";
-                document.getElementById('fname').value = "";
-                document.getElementById('email').value = "";
-                document.getElementById('password').value = "";
-
-                alert(JsonResp.message);
-                window.location.href = "login.html";
-            } else {
-                document.getElementById("result").innerHTML = JsonResp.message;
-            }
-        }
-    }
-    return false;
-}
 
 function login() {
 
@@ -55,22 +24,12 @@ function login() {
         if (Http.readyState === 4) {
             let JSONres = JSON.parse(Http.responseText)
             if (JSONres.status === 200) {
-                document.getElementById('lemail').value = ""
-                document.getElementById('lpassword').value = ""
+                alert(JSONres.message);
+                window.location.href = "./Dashboard.html"
 
-                document.getElementById("Result").innerText = JSONres.message;
-                document.getElementById("name").innerText = "Name :" + JSONres.user.name;
-                document.getElementById("fname").innerText = "Father Name :" + JSONres.user.fathername;
-                document.getElementById("email").innerText = "Email :" + JSONres.user.email;
-            }
-            else if (JSONres.status > 200) {
-                document.getElementById("Result").innerText = JSONres.message;
-                document.getElementById("name").innerText = "";
-                document.getElementById("fname").innerText = "";
-                document.getElementById("email").innerText = "";
             }
             else {
-                document.getElementById("Result").innerText = JSONres.message;
+                alert(JSONres.message);
             }
 
         }
@@ -82,3 +41,84 @@ function login() {
     return false;
 }
 
+
+function addPost() {
+    let utitle = document.getElementById("addTitle").value;
+    let uDesption = document.getElementById("addDescription").value;
+    var post = {
+        title: utitle,
+        Despcription: uDesption
+    }
+    const Http = new XMLHttpRequest();
+    Http.open("POST", url + "/dashboard");
+    Http.setRequestHeader("Content-Type", "application/json");
+
+    Http.send(JSON.stringify(post));
+
+    Http.onreadystatechange = (e) => {
+        if (Http.readyState === 4) {
+            let jsonRes = JSON.parse(Http.responseText)
+            alert(jsonRes.message)
+            let html = "";
+            jsonRes.post.forEach(function (element, index) {
+                html += `<div class="card border my-3 col-md-12" >
+            <div class="card-body mr-5">
+            <h2 id="title">${element.title}</h2>
+            <span id="date">${element.date}</span>
+            <p id="descrip">${element.description}</p>
+            <button class="btn btn-primary" style="background-color: #c18f59; border-color: #c18f59;" id="index" onclic="del(this.id)">Delete
+            Post</button>
+            </div>
+            </div>`
+            });
+            var posts = document.getElementById('posts');
+            posts.innerHTML = html;
+        }
+    }
+    return false;
+}
+
+
+const admin = () => {
+    const Http = new XMLHttpRequest();
+    // var url = "http://localhost:5000/getPosts";
+    Http.open("GET", url+"/getPosts");
+    Http.send();
+
+    Http.onreadystatechange = (e) => {
+        console.log(Http.responseText)
+        
+    //     let html = "";
+    //     jsonRes.forEach(function (element, index) {
+    //         html += `<div class="card border my-3 col-md-12">
+    //     <div class="card-body mr-5">
+    //     <h2 id="title">${element.title}</h2>
+    //     <span id="date">${element.date}</span>
+    //     <p id="descrip">${element.description}</p>
+    //     <button class="btn btn-primary" style="background-color: #c18f59;
+    //     border-color: #c18f59;" id="${index}" onclick="del(this.id)">Delete
+    //     Post</button>
+    //     </div>
+    //     </div>`
+    //     });
+    //     var posts = document.getElementById('posts');
+    //     posts.innerHTML = html;
+    }
+}
+
+function del(index) {
+    const Http = new XMLHttpRequest();
+    console.log(index)
+    // var url = "http://localhost:5000/del";
+    Http.open("POST", url+"/del");
+    Http.setRequestHeader("Content-Type", "application/json");
+    Http.send(JSON.stringify({
+        i: index
+    }));
+    Http.onreadystatechange = (e) => {
+        let jsonRes = JSON.parse(Http.responseText)
+        console.log(jsonRes)
+        // console.warn(xhr.responseText)
+    }
+    admin();
+}
